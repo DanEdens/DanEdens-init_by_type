@@ -1,25 +1,11 @@
-
 cls
-set /p projecttype="Select Project type.."
-echo Python
-echo Nodejs
-echo Puppet
-echo job
-echo other
-git checkout %%projecttype%%
+choice /C 12345 /M "Select a project type"
+IF ERRORLEVEL 1 SET REPO=Python
+IF ERRORLEVEL 2 SET REPO=Nodejs
+IF ERRORLEVEL 3 SET REPO=Puppet
+IF ERRORLEVEL 4 SET REPO=job
+IF ERRORLEVEL 5 SET REPO=other
+git checkout %REPO%
 rm -f .git
-
-git init
-
-echo pushd %CD% > run.bat
-
-echo popd %CD% >> run.bat
-
-
-setx jobpath %CD%
-
-
-::make template
-git config commit.template .git_commit_template.txt
-::make
-mklink /J %CD%\user %me%\
+setup.bat
+del %0
